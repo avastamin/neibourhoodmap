@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Neighbourhood </title>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <link rel="stylesheet" href="assets/css/simple-sidebar.css"/>
+</head>
+<body>
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <div class="form-group">
+            <label for="search">
+                Type to narrow your search
+                <input type="text" id="search" placeholder="Search..." data-bind="textInput: search_text" />
+
+            </label>
+        </div>
+        <ul class="sidebar-nav" data-bind="foreach: filterRestaurants">
+
+            <li>
+                <a href="#" data-bind="text: name"></a>
+            </li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Div area for MAP -->
+                    <div id="mapcanvas"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+<script async src="assets/js/jquery-3.1.1.min.js"></script>
+<script async src="assets/js/knockout-3.4.0.js"></script>
+<script async src="assets/js/app.js"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMNBtEzJyAvLrGDgO3m-_KNTHHfc42FK8&callback=initMap">
+</script>
+</body>
+</html>
