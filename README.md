@@ -1,4 +1,4 @@
-# Neighborhood Map  using [jQuery][1]jQuery, [KockoutJs][2], [Google Maps API][3], [Yelp API][4]
+# Neighborhood Map  using [jQuery][1], [KockoutJs][2], [Google Maps API][3], [Yelp API][4]
 
 All application components render on-screen in a responsive manner and usable across modern desktop, tablet, and phone browsers.
 Includes a text input field that filters the map markers and list items to locations matching the text input.
