@@ -3,7 +3,9 @@
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Neighbourhood </title>
+    <meta name="keywords" content="HTML,CSS,JSON,JavaScript">
+    <meta name="author" content="Hege Refsnes">
+    <title>Neighbourhood Map </title>
     <link rel="stylesheet" href="assets/css/style.css"/>
     <link rel="stylesheet" href="assets/css/simple-sidebar.css"/>
 </head>
@@ -13,11 +15,8 @@
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <div class="form-group">
-            <label for="search">
-                Type to narrow your search
+            <label for="search">Type to narrow your search</label>
                 <input type="text" id="search" placeholder="Search..." data-bind="textInput: search_text" />
-
-            </label>
         </div>
         <ul class="sidebar-nav" data-bind="foreach: filterRestaurants">
 
@@ -43,11 +42,11 @@
 
 </div>
 <!-- /#wrapper -->
-<script async src="assets/js/jquery-3.1.1.min.js"></script>
-<script async src="assets/js/knockout-3.4.0.js"></script>
-<script async src="assets/js/app.js"></script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMNBtEzJyAvLrGDgO3m-_KNTHHfc42FK8&callback=initMap">
-</script>
+<script src="assets/js/oauth1.js"></script>
+<script src="assets/js/sha1.js"></script>
+<script src="assets/js/knockout-3.4.0.js"></script>
+<script src="assets/js/jquery-3.1.1.min.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMNBtEzJyAvLrGDgO3m-_KNTHHfc42FK8"></script>
 </body>
 </html>
