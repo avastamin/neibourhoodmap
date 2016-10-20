@@ -4,21 +4,21 @@ var markers = [];
 var Model = {
     restaurants : [
         {
-            name: "Lovely Sushi",
+            name: 'Lovely Sushi',
             position: {lat: 52.529461, lng: 13.472718},
-            description: "Sushi Restaurant",
+            description: 'Sushi Restaurant',
             image_url: 'https://s3-media2.fl.yelpcdn.com/bphoto/EZ04y3oDuhWk6Q_crHiqpw/ms.jpg',
             rating_img_url: 'https://s3-media2.fl.yelpcdn.com/assets/2/www/img/99493c12711e/ico/stars/v1/stars_4_half.png'
         }, {
-            name: "Allee Bistro",
+            name: 'Allee Bistro',
             position: {lat: 52.535247, lng: 13.496363},
-            description: "Sushi Restaurant",
+            description: 'Sushi Restaurant',
             image_url: 'https://s3-media2.fl.yelpcdn.com/bphoto/EZ04y3oDuhWk6Q_crHiqpw/ms.jpg',
             rating_img_url: 'https://s3-media2.fl.yelpcdn.com/assets/2/www/img/99493c12711e/ico/stars/v1/stars_4_half.png'
         }, {
-            name: "Reisschale",
+            name: 'Reisschale',
             position: {lat:52.516251, lng: 13.481724},
-            description: "Vietnamese Restaurant ",
+            description: 'Vietnamese Restaurant ',
             image_url: 'https://s3-media2.fl.yelpcdn.com/bphoto/EZ04y3oDuhWk6Q_crHiqpw/ms.jpg',
             rating_img_url: 'https://s3-media2.fl.yelpcdn.com/assets/2/www/img/99493c12711e/ico/stars/v1/stars_4_half.png'
         }, {
@@ -28,9 +28,9 @@ var Model = {
             image_url: 'https://s3-media2.fl.yelpcdn.com/bphoto/EZ04y3oDuhWk6Q_crHiqpw/ms.jpg',
             rating_img_url: 'https://s3-media2.fl.yelpcdn.com/assets/2/www/img/99493c12711e/ico/stars/v1/stars_4_half.png'
         }, {
-            name: "Zhou´s Five",
+            name: 'Zhou´s Five',
             position: {lat: 52.504157, lng: 13.473256},
-            description: "Asian Restaurant",
+            description: 'Asian Restaurant',
             image_url: 'https://s3-media2.fl.yelpcdn.com/bphoto/EZ04y3oDuhWk6Q_crHiqpw/ms.jpg',
             rating_img_url: 'https://s3-media2.fl.yelpcdn.com/assets/2/www/img/99493c12711e/ico/stars/v1/stars_4_half.png'
         }
@@ -93,7 +93,7 @@ $.ajax(generateYelpContentString())
     .done(function (results) {
         var center = results.region.center;
         createRestaurants(results.businesses);  //  Call a function to generate restaurants data
-        initMap(center);  // initiate Google map
+        addMapScript();
     })
     .fail(function () {
         alert("Error loading data from Yelp");
@@ -108,7 +108,7 @@ var createRestaurants = function (yelpRestaurants) {
             description: data.snippet_text,
             image_url: data.image_url,
             rating_img_url: data.rating_img_url
-        }
+        };
         Model.yelprestaurants.push(restaurantItem);
     });
 };
@@ -120,7 +120,7 @@ var Restaurant = function (data) {
     this.description = ko.observable(data.description);
     this.image_url = ko.observable(data.image_url);
     this.rating_img_url = ko.observable(data.rating_img_url);
-}
+};
 //knockout ViewModel
 var ViewModel = function(){
     var self = this;
@@ -131,6 +131,10 @@ var ViewModel = function(){
     self.restaurantList = ko.observableArray();
     self.showFilteredMarkers = ko.observable(); // restaurant to store the filter
 
+    this.setMarkeronClick = function(Item) {
+        google.maps.event.trigger(Item.marker, 'click');
+        console.log(Item);
+    };
     //iterates through locations in Model and adds info to markers
    Model.restaurants.forEach(function (restaurantItem) {
         self.restaurantList.push( new Restaurant(restaurantItem));
@@ -149,7 +153,7 @@ var ViewModel = function(){
             searchResult = ko.utils.arrayFilter(self.restaurantList(), function (restaurant) {
                 return (
                     (self.search_text().length == 0 || restaurant.name().toLowerCase().indexOf(self.search_text().toLowerCase()) > -1)
-                )
+                );
             });
         }
 
@@ -160,12 +164,12 @@ var ViewModel = function(){
 
     // To make visible user serach result only
     self.showFilteredMarkers = function(filteredSearchArray, restaurantsArray) {
-
-        for (var i = 0; i < restaurantsArray.length; i++) {
+          var i;
+        for ( i = 0; i < restaurantsArray.length; i++) {
             restaurantsArray[i].marker.setVisible(false);
         }
 
-        for (var i = 0; i < filteredSearchArray.length; i++) {
+        for ( i = 0; i < filteredSearchArray.length; i++) {
 
             restaurantsArray[i].marker.setVisible(true);
         }
@@ -195,6 +199,7 @@ var ViewModel = function(){
             '<div class="iw-subTitle">Review</div>' +
             '<img class="review" src='+ self.restaurantList()[i].rating_img_url() +' alt="Rating">' +
             '</div>' +
+            '<p class="credit">Powered by Yelp API</p>'+
             '<div class="iw-bottom-gradient"></div>' +
             '</div>';
 
@@ -233,8 +238,6 @@ var ViewModel = function(){
             // Removes white background DIV
             iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
-            // Moves the infowindow 115px to the right.
-            iwOuter.parent().parent().css({left: '115px'});
 
             // Moves the shadow of the arrow 76px to the left margin.
             iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
@@ -264,19 +267,32 @@ var ViewModel = function(){
             } else {
                 //setTimeout(function(){ this.setAnimation(google.maps.Animation.BOUNCE); }, 750);
                 marker.setAnimation(google.maps.Animation.BOUNCE);
-                setTimeout(function(){ marker.setAnimation(null); }, 1050);
+                setTimeout(function(){ marker.setAnimation(null); }, 1400);
                 marker.setIcon('assets/img/map-marker.png');
                 infoWindow.open(map, this);
             }
         });
     }
-}
+};
 //init funtion for google maps API to call map and place on document
-function initMap(center) {
+function initMap() {
     map = new google.maps.Map(document.getElementById('mapcanvas'), {
-        center: {lat: center.latitude, lng: center.longitude},
+        center: {lat: 52.513532, lng: 13.458728},
         zoom: 12
     });
     //ensures ViewModel only runs when google maps call returns successful
     ko.applyBindings(ViewModel);
+}
+
+//
+function addMapScript() {
+    var mapScript = document.createElement('script');
+    mapScript.type = 'text/javascript';
+    mapScript.async = true;
+    mapScript.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBMNBtEzJyAvLrGDgO3m-_KNTHHfc42FK8&callback=initMap';
+    mapScript.onerror = function() {
+        console.log("Error loading Google Maps API");
+        alert("Error loading Google Maps API");
+    }
+    document.body.appendChild(mapScript);
 }

@@ -21,7 +21,7 @@
         <ul class="sidebar-nav" data-bind="foreach: filterRestaurants">
 
             <li>
-                <a href="#" data-bind="text: name"></a>
+                <a href="#" data-bind="text: name, click: setMarkeronClick"></a>
             </li>
         </ul>
     </div>
@@ -47,6 +47,5 @@
 <script src="assets/js/knockout-3.4.0.js"></script>
 <script src="assets/js/jquery-3.1.1.min.js"></script>
 <script src="assets/js/app.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMNBtEzJyAvLrGDgO3m-_KNTHHfc42FK8"></script>
 </body>
 </html>
