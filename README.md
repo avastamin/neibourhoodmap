@@ -9,7 +9,7 @@ Clicking a location on the list displays unique information about the location, 
 ## How to use:
     1. Clone or download the files
     2. Open index.html into the browser
-then you will list of restaurants in Berlin, Germany.    
+then you will see list of restaurants in Berlin, Germany.    
 
 [1]: http://api.jquery.com/ "jQuery API"
 [2]: http://knockoutjs.com/ "KnockoutJs"
