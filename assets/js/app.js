@@ -53,7 +53,7 @@ var generateYelpContentString = function () {
         return (Math.floor(Math.random() * 1e12).toString());
     }
 
-    var yelp_url = "http://api.yelp.com/v2/search/";
+    var yelp_url = "https://api.yelp.com/v2/search/";
 
     var parameters = {
         oauth_consumer_key: consumerKey,
